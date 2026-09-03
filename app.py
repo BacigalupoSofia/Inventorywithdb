@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
@@ -18,8 +18,22 @@ class Product(db.Model):
     def __repr__(self):
         return f'<Product {self.name}>'
 
-@app.route('/')
+@app.route('/', methods=['GET', 'POST'])
 def home():
+
+    if request.method == 'POST':
+
+        name = request.form['name']
+        description = request.form['description']
+        manufacturer = request.form['manufacturer']
+        stock_quantity = int(request.form['quantity'])
+
+        new_product = Product(name=name, description=description, manufacturer=manufacturer, stock_quantity=stock_quantity)
+        db.session.add(new_product)
+        db.session.commit()
+
+        return redirect(url_for('home'))
+
     products = Product.query.all() 
     return render_template('index.html', products=products)
 
