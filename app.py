@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, render_template
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
@@ -20,7 +20,8 @@ class Product(db.Model):
 
 @app.route('/')
 def home():
-    return 'HOLA DATABASE'
+    products = Product.query.all() 
+    return render_template('index.html', products=products)
 
 if __name__ == '__main__':
     with app.app_context():

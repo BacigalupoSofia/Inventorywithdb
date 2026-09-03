@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
+    <title>Stock Management</title>
+  </head>
+  <body>
+    <h1>Dental Practice Stock</h1>
+
+    <h2>Stock List</h2>
+
+    {% if products %} {% for product in products %}
+
+    <section class="product-grid">
+      <article class="product-card">
+        <h3 class="product-name">{{ product.name }}</h3>
+        <img class="product-img" src="" />
+        <p class="product-manufacturer">{{ product.manufacturer }}</p>
+        <p class="stock-quatity">{{ product.stock_quantity }}</p>
+      </article>
+    </section>
+
+    {% endfor %} {% else %}
+    <p>No products in stock.</p>
+    {% endif %}
+  </body>
+</html>
