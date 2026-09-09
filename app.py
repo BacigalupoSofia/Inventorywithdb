@@ -28,7 +28,12 @@ def home():
         manufacturer = request.form['manufacturer']
         stock_quantity = int(request.form['quantity'])
 
-        new_product = Product(name=name, description=description, manufacturer=manufacturer, stock_quantity=stock_quantity)
+        new_product = Product(
+            name=name,
+            description=description,
+            manufacturer=manufacturer,
+            stock_quantity=stock_quantity,
+        )
         db.session.add(new_product)
         db.session.commit()
 
@@ -36,6 +41,11 @@ def home():
 
     products = Product.query.all() 
     return render_template('index.html', products=products)
+
+@app.route('/details/<int:product_id>')
+def details(product_id):
+    product = Product.query.get_or_404(product_id)
+    return render_template('details.html', product=product)
 
 if __name__ == '__main__':
     with app.app_context():
