@@ -88,6 +88,23 @@ def details(id):
     product = Product.query.get_or_404(id)
     return render_template('details.html', product=product)
 
+# Edit product
+
+@app.route('/edit/<int:id>', methods=['GET', 'POST'])
+def edit_product(id):
+    product = Product.query.get_or_404(id)
+
+    if request.method == 'POST':
+        product.name = request.form['name']
+        product.description = request.form['description']
+        product.manufacturer = request.form['manufacturer']
+        product.stock_quantity = int(request.form['stock_quantity'])
+
+        db.session.commit()
+        return redirect(url_for('stock'))
+
+    return render_template('edit.html', product=product)
+
 
 if __name__ == '__main__':
     with app.app_context():

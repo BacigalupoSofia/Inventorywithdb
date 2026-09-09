@@ -1,0 +1,54 @@
+{% extends "base.html" %} {% block title %} Edit Product Details {% endblock %}
+{% block content %}
+
+<h1>Edit {{product.name}}</h1>
+
+<form method="POST">
+  <label for="name">Name:</label>
+  <input
+    type="text"
+    name="name"
+    id="name"
+    value="{{ product.name }}"
+    required
+  />
+  <br /><br />
+
+  <label for="description">Description:</label>
+  <input
+    type="text"
+    name="description"
+    id="description"
+    value="{{ product.description }}"
+    required
+  />
+  <br /><br />
+
+  <label for="manufacturer">Manufacturer:</label>
+  <input
+    type="text"
+    name="manufacturer"
+    id="manufacturer"
+    value="{{ product.manufacturer }}"
+    required
+  />
+  <br /><br />
+
+  <label for="stock_quantity">Stock Quantity:</label>
+  <input
+    type="number"
+    name="stock_quantity"
+    id="stock_quantity"
+    min="0"
+    value="{{ product.stock_quantity }}"
+    required
+  />
+  <br /><br />
+
+  <button type="submit" class="btn btn-primary">Update Product</button>
+</form>
+
+<br />
+<a href="{{ url_for('stock') }}">Back to Stock</a>
+
+{% endblock %}
