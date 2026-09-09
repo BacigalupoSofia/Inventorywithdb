@@ -46,10 +46,13 @@ def stock():
     products = Product.query.all() 
     return render_template('index.html', products=products)
 
-@app.route('/details/<int:product_id>')
-def details(product_id):
-    product = Product.query.get_or_404(product_id)
-    return render_template('details.html', product=product)
+
+@app.route('/delete/<int:id>')
+def delete_product(id):
+    product = Product.query.get_or_404(id)
+    db.session.delete(product)
+    db.session.commit()
+    return redirect(url_for('stock'))
 
 if __name__ == '__main__':
     with app.app_context():

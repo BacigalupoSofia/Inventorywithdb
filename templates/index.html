@@ -2,9 +2,7 @@
 {% block content %}
 
 <body>
-  <h1>Dental Practice Stock</h1>
-
-  <h2>Stock Products</h2>
+  <h2>Dental Practice Stock</h2>
 
   <section class="product-grid">
     {% if products %} {% for product in products %}
@@ -22,6 +20,7 @@
         <a href="#" class="btn btn-outline-danger"> ➖ </a>
       </p>
       <a href="#" class="btn btn-primary"> See Product</a>
+      <a href="{{ url_for('delete_product', id=product.id) }}">Delete</a>
     </article>
     {% endfor %}
   </section>
