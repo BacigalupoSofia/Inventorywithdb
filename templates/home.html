@@ -1,0 +1,78 @@
+{% extends "base.html" %} {% block title %} Home - Dental Inventory App {%
+endblock %} {% block content %}
+
+<div
+  id="homeCarousel"
+  class="carousel slide"
+  data-bs-ride="carousel"
+  data-bs-interval="3000"
+>
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <a href="#">
+        <img
+          src="{{ url_for('static', filename='images/List.png') }}"
+          class="d-block w-100"
+          alt="Items list picture"
+        />
+        <div class="carousel-caption d-block">
+          <h5>Stock of Dental Items</h5>
+        </div>
+      </a>
+    </div>
+
+    <div class="carousel-item">
+      <img
+        src="{{ url_for('static', filename='images/stock.png') }}"
+        class="d-block w-100"
+        alt="Stock picture"
+      />
+      <div class="carousel-caption d-block">
+        <h5>Detailed Information of the products</h5>
+      </div>
+    </div>
+
+    <div class="carousel-item">
+      <img
+        src="{{ url_for('static', filename='images/alert.png') }}"
+        class="d-block"
+        alt="Low alert picture"
+      />
+      <div class="carousel-caption d-block">
+        <h5>Low Stock Control</h5>
+      </div>
+    </div>
+
+    <div class="carousel-item">
+      <img
+        src="{{ url_for('static', filename='images/orders.png') }}"
+        class="d-block w-100"
+        alt="orders picture"
+      />
+      <div class="carousel-caption d-block">
+        <h5>Keep Track of Orders and Providers</h5>
+      </div>
+    </div>
+  </div>
+
+  <!-- controls for carousel -->
+  <button
+    class="carousel-control-prev"
+    type="button"
+    data-bs-target="#homeCarousel"
+    data-bs-slide="prev"
+  >
+    <span class="carousel-control-prev-icon"></span>
+  </button>
+
+  <button
+    class="carousel-control-next"
+    type="button"
+    data-bs-target="#homeCarousel"
+    data-bs-slide="next"
+  >
+    <span class="carousel-control-next-icon"></span>
+  </button>
+</div>
+
+{% endblock %}

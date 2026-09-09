@@ -18,8 +18,12 @@ class Product(db.Model):
     def __repr__(self):
         return f'<Product {self.name}>'
 
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/')
 def home():
+    return render_template('home.html')
+
+@app.route('/stock', methods=['GET', 'POST'])
+def stock():
 
     if request.method == 'POST':
 
@@ -37,7 +41,7 @@ def home():
         db.session.add(new_product)
         db.session.commit()
 
-        return redirect(url_for('home'))
+        return redirect(url_for('stock'))
 
     products = Product.query.all() 
     return render_template('index.html', products=products)
