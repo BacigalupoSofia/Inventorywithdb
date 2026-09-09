@@ -15,43 +15,35 @@
       <h3 class="card-title product-name">{{ product.name }}</h3>
       <p class="product-manufacturer">{{ product.manufacturer }}</p>
       <p class="stock-quatity">
-        <a href="#" class="btn btn-outline-secondary"> ➕</a>
+        <a
+          href="{{ url_for('plus_stock', id=product.id) }}"
+          class="btn btn-outline-secondary"
+        >
+          ➕</a
+        >
         {{ product.stock_quantity }}
-        <a href="#" class="btn btn-outline-danger"> ➖ </a>
+        <a
+          href="{{ url_for('minus_stock', id=product.id) }}"
+          class="btn btn-outline-warning"
+        >
+          ➖
+        </a>
       </p>
-      <a href="#" class="btn btn-primary"> See Product</a>
+      <a href="{{url_for('details', id=product.id) }}" class="btn btn-primary">
+        See Product</a
+      >
       <a href="{{ url_for('delete_product', id=product.id) }}">Delete</a>
     </article>
-    {% endfor %}
+    {% endfor %} {% else %}
+    <p>No products in stock.</p>
+    {% endif %}
   </section>
 
-  <!-- Add product Form -->
+  <!-- Add product Form button-->
 
-  <button class="btn btn-primary add-button" type="button">Add Product</button>
-
-  <form method="POST">
-    <label for="name">Name:</label>
-    <input type="text" name="name" id="name" required />
-    <br /><br />
-
-    <label for="description">Description:</label>
-    <input type="text" name="description" id="description" required />
-    <br /><br />
-
-    <label for="manufacturer">Manufacturer:</label>
-    <input type="text" name="manufacturer" id="manufacturer" required />
-    <br /><br />
-
-    <label for="quantity">Quantity:</label>
-    <input type="number" name="quantity" id="quantity" required />
-    <br /><br />
-
-    <button type="submit">Add Product</button>
-  </form>
-
-  {% else %}
-  <p>No products in stock.</p>
-  {% endif %}
+  <a href="{{ url_for('add_product')}}" class="btn btn-success">
+    Add Product
+  </a>
 </body>
 
 {% endblock %}

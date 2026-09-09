@@ -1,2 +1,3 @@
 {% extends "base.html" %} {% block title %} PRoduct Details {% endblock %} {%
-block content %} {{product.name}} {% endblock %}
+block content %} {{product.name}} {{product.description}}
+{{product.manufacturer}} {{product.stock_quantity}} {% endblock %}
