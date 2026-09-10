@@ -99,8 +99,6 @@ h2 {
 .product-card {
   justify-content: center;
   align-items: center;
-  padding: 20px;
-  margin: 10px;
 }
 
 /* add form to add a new product to the database*/

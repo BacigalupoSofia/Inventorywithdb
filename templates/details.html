@@ -1,32 +1,66 @@
 {% extends "base.html" %} {% block title %} PRoduct Details {% endblock %} {%
 block content %}
 
-<article class="card product-card">
-  <img
-    class="card-img-left"
-    src="https://picsum.photos/200"
-    alt="Card image cap"
-  />
-  <h3 class="card-title product-name">{{ product.name }}</h3>
-  <p class="product-manufacturer">{{ product.manufacturer }}</p>
-  <p class="stock-quatity">
-    <a
-      href="{{ url_for('plus_stock', id=product.id, page='details') }}"
-      class="btn btn-outline-secondary"
-    >
-      ➕</a
-    >
-    {{ product.stock_quantity }}
-    <a
-      href="{{ url_for('minus_stock', id=product.id, page='details') }}"
-      class="btn btn-outline-warning"
-    >
-      ➖
-    </a>
-  </p>
+<div class="row justify-content-center p-3">
+  <!-- PRODUCT CARD -->
+  <div class="col-md-5 d-flex mb-3">
+    <article class="card product-card w-100 h-100">
+      <img
+        class="card-img-left"
+        src="https://picsum.photos/200"
+        alt="Card image cap"
+      />
 
-  <a href="{{ url_for('delete_product', id=product.id) }}">Delete</a>
-  <a href="{{ url_for('edit_product', id=product.id) }}">Edit</a>
-</article>
+      <h3 class="card-title product-name">{{ product.name }}</h3>
+
+      <h6 class="card-subtitle mb-2 text-muted">{{ product.manufacturer }}</h6>
+
+      <p class="stock-quatity">
+        <a
+          href="{{ url_for('plus_stock', id=product.id, page='details') }}"
+          class="btn btn-outline-secondary"
+        >
+          ➕
+        </a>
+
+        {{ product.stock_quantity }}
+
+        <a
+          href="{{ url_for('minus_stock', id=product.id, page='details') }}"
+          class="btn btn-outline-warning"
+        >
+          ➖
+        </a>
+      </p>
+
+      <div class="card-body">
+        <a href="{{ url_for('delete_product', id=product.id) }}"> Delete </a>
+
+        <a href="{{ url_for('edit_product', id=product.id) }}"> Edit </a>
+      </div>
+    </article>
+  </div>
+
+  <!-- ORDER CARD -->
+  <div class="col-md-5 d-flex mb-3">
+    <div class="card w-100 h-100">
+      <div class="card-header">Order Details</div>
+
+      <div class="card-body">
+        <h5 class="card-title">Order NOW from the provider</h5>
+
+        <p class="card-text">provider name and link to the product</p>
+
+        <a href="#" class="btn btn-primary"> Order Now </a>
+      </div>
+
+      <div class="card-body">
+        <h5 class="card-title">Add to the next order plan</h5>
+
+        <a href="#" class="btn btn-primary"> Add to order </a>
+      </div>
+    </div>
+  </div>
+</div>
 
 {% endblock %}
