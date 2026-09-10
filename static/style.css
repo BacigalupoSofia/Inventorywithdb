@@ -84,6 +84,12 @@ nav a:focus {
 
 /* cards - display product, button to add up or remove quantity, button to see full details*/
 
+h2 {
+  text-align: center;
+  margin: 20px 0;
+  padding-top: 30px;
+  padding-bottom: 30px;
+}
 .product-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -94,6 +100,13 @@ nav a:focus {
   justify-content: center;
   align-items: center;
   padding: 20px;
+  margin: 10px;
 }
 
 /* add form to add a new product to the database*/
+
+#go-add-form {
+  display: block;
+  width: 40%;
+  margin: 50px auto;
+}

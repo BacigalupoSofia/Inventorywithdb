@@ -16,20 +16,23 @@
       <p class="product-manufacturer">{{ product.manufacturer }}</p>
       <p class="stock-quatity">
         <a
-          href="{{ url_for('plus_stock', id=product.id) }}"
+          href="{{ url_for('plus_stock', id=product.id, page='stock') }}"
           class="btn btn-outline-secondary"
         >
           ➕</a
         >
         {{ product.stock_quantity }}
         <a
-          href="{{ url_for('minus_stock', id=product.id) }}"
+          href="{{ url_for('minus_stock', id=product.id, page='stock') }}"
           class="btn btn-outline-warning"
         >
           ➖
         </a>
       </p>
-      <a href="{{url_for('details', id=product.id) }}" class="btn btn-primary">
+      <a
+        href="{{url_for('details', id=product.id, page='stock') }}"
+        class="btn btn-primary"
+      >
         See Product</a
       >
       <a href="{{ url_for('delete_product', id=product.id) }}">Delete</a>
@@ -42,7 +45,11 @@
 
   <!-- Add product Form button-->
 
-  <a href="{{ url_for('add_product')}}" class="btn btn-success">
+  <a
+    href="{{ url_for('add_product')}}"
+    class="btn btn-success"
+    id="go-add-form"
+  >
     Add Product
   </a>
 </body>

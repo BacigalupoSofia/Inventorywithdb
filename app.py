@@ -67,18 +67,37 @@ def delete_product(id):
 
 @app.route('/minus/<int:id>')
 def minus_stock(id):
-    product = Product.query.get_or_404(id)
-    product.stock_quantity -= 1
-    db.session.commit()
-    return redirect(url_for('stock'))
 
+    product = Product.query.get_or_404(id)
+
+    page = request.args.get("page")
+
+    if product.stock_quantity > 0:
+        product.stock_quantity -= 1
+        db.session.commit()
+
+
+    if page == "stock":
+        return redirect(url_for("stock"))
+
+    if page == "details":
+        return redirect(url_for("details", id=id))
+
+    
 @app.route('/plus/<int:id>')
 def plus_stock(id):
+
+    page = request.args.get("page")
 
     product = Product.query.get_or_404(id)
     product.stock_quantity += 1
     db.session.commit()
-    return redirect(url_for('stock'))
+    
+    if page == "stock":
+        return redirect(url_for("stock"))
+    
+    if page == "details":
+        return redirect(url_for("details", id=id))
 
 
 # View product details

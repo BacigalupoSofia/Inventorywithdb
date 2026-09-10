@@ -1,3 +1,32 @@
 {% extends "base.html" %} {% block title %} PRoduct Details {% endblock %} {%
-block content %} {{product.name}} {{product.description}}
-{{product.manufacturer}} {{product.stock_quantity}} {% endblock %}
+block content %}
+
+<article class="card product-card">
+  <img
+    class="card-img-left"
+    src="https://picsum.photos/200"
+    alt="Card image cap"
+  />
+  <h3 class="card-title product-name">{{ product.name }}</h3>
+  <p class="product-manufacturer">{{ product.manufacturer }}</p>
+  <p class="stock-quatity">
+    <a
+      href="{{ url_for('plus_stock', id=product.id, page='details') }}"
+      class="btn btn-outline-secondary"
+    >
+      ➕</a
+    >
+    {{ product.stock_quantity }}
+    <a
+      href="{{ url_for('minus_stock', id=product.id, page='details') }}"
+      class="btn btn-outline-warning"
+    >
+      ➖
+    </a>
+  </p>
+
+  <a href="{{ url_for('delete_product', id=product.id) }}">Delete</a>
+  <a href="{{ url_for('edit_product', id=product.id) }}">Edit</a>
+</article>
+
+{% endblock %}
