@@ -1,13 +1,15 @@
 from flask import Flask, render_template, request, redirect, url_for
-from flask_sqlalchemy import SQLAlchemy
-from models import Product, Provider, Order, OrderItem
+from models import db, Product, Provider, Order, OrderItem
 
 app = Flask(__name__)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///products.db'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///products.db"
+app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
-db = SQLAlchemy(app)
+db.init_app(app)
+
+with app.app_context():
+    db.create_all()
 
 
 # Main page of the app
@@ -30,31 +32,35 @@ def stock():
 def add_product():
 
     if request.method == 'POST':
-    
-            name = request.form['name']
-            description = request.form['description']
-            manufacturer = request.form['manufacturer']
-            stock_quantity = int(request.form['quantity'])
-            provider = request.form['provider']
-            website = request.form['website']
-    
-            new_product = Product(
-                name=name,
-                description=description,
-                manufacturer=manufacturer,
-                stock_quantity=stock_quantity,
-            )
 
-            new_provider = Provider(
-                name=provider,
-                website=website
-                )
+        name = request.form['name']
+        description = request.form['description']
+        manufacturer = request.form['manufacturer']
+        stock_quantity = int(request.form['quantity'])
+        provider_name = request.form['provider']
+        website = request.form['website']
 
-            db.session.add(new_product)
-            db.session.add(new_provider)
-            db.session.commit()
-    
-            return redirect(url_for('stock'))
+        # Create the product
+        new_product = Product(
+            name=name,
+            description=description,
+            manufacturer=manufacturer,
+            stock_quantity=stock_quantity
+        )
+
+        # Create the provider
+        new_provider = Provider(
+            name=provider_name,
+            website=website
+        )
+
+        db.session.add(new_product)
+        db.session.add(new_provider)
+
+        db.session.commit()
+
+        return redirect(url_for('stock'))
+
     return render_template('add.html')
 
 # Delete from database or add or remove 1 item from the stock quantity 
