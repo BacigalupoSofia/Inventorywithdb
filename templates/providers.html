@@ -1,0 +1,7 @@
+{% extends "base.html" %} {% block title %} Product Providers {% endblock %} {%
+block content %} {%for provider in providers%}
+
+<ul>
+  {{ provider.name }}, {{provider.product.name}}
+</ul>
+{%endfor%} {% endblock %}

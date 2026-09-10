@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
+from models import Product, Provider, Order, OrderItem
 
 app = Flask(__name__)
 
@@ -8,17 +9,8 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
 
-class Product(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(50), nullable=False)
-    description = db.Column(db.String(100), nullable=False)
-    manufacturer = db.Column(db.String(50), nullable=False)
-    stock_quantity = db.Column(db.Integer, nullable=False)
 
-    def __repr__(self):
-        return f'<Product {self.name}>'
-
-#Main page of the app
+# Main page of the app
 
 @app.route('/')
 def home():
@@ -43,6 +35,8 @@ def add_product():
             description = request.form['description']
             manufacturer = request.form['manufacturer']
             stock_quantity = int(request.form['quantity'])
+            provider = request.form['provider']
+            website = request.form['website']
     
             new_product = Product(
                 name=name,
@@ -50,7 +44,14 @@ def add_product():
                 manufacturer=manufacturer,
                 stock_quantity=stock_quantity,
             )
+
+            new_provider = Provider(
+                name=provider,
+                website=website
+                )
+
             db.session.add(new_product)
+            db.session.add(new_provider)
             db.session.commit()
     
             return redirect(url_for('stock'))
@@ -123,6 +124,14 @@ def edit_product(id):
         return redirect(url_for('stock'))
 
     return render_template('edit.html', product=product)
+
+# Providers page
+
+@app.route('/providers/<int:product_id>', methods=['GET', 'POST'])
+def providers(product_id):
+    providers = Provider.query.all()
+    product = Product.query.get_or_404(product_id)
+    return render_template('providers.html', providers=providers, product=product)
 
 
 if __name__ == '__main__':
