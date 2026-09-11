@@ -11,6 +11,9 @@ class Product(db.Model):
     manufacturer = db.Column(db.String(50), nullable=False)
     stock_quantity = db.Column(db.Integer, nullable=False)
 
+    provider_id = db.Column(db.Integer, db.ForeignKey('providers.id'))
+    provider = db.relationship('Provider', back_populates='products')
+
     order_items = db.relationship(
         "OrderItem",
         back_populates="product"
@@ -29,6 +32,8 @@ class Provider(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(50), nullable=False)
     website = db.Column(db.String(100), nullable=False)
+
+    products = db.relationship('Product', back_populates='provider')
     
 
     orders = db.relationship(

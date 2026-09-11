@@ -1,7 +1,20 @@
 {% extends "base.html" %} {% block title %} Product Providers {% endblock %} {%
-block content %} {%for provider in providers%}
+block content %}
 
-<ul>
-  {{ provider.name }}, {{provider.product.name}}
-</ul>
-{%endfor%} {% endblock %}
+<h2>Providers</h2>
+
+{% if providers %} {% for provider in providers %}
+
+<div>
+  <h3>{{ provider.name }}</h3>
+  <p>{{ provider.website }}</p>
+</div>
+
+{% endfor %}
+
+<a href="{{ url_for('add_provider') }}" class="btn btn-primary">Add Provider</a>
+{% else %}
+
+<p>No providers have been added yet.</p>
+
+{% endif %} {% endblock %}

@@ -1,7 +1,6 @@
 {% extends "base.html" %} {% block title %} Add Form {% endblock %} {% block
 content %}
-
-<form method="POST">
+<form method="POST" action="{{ url_for('add_product') }}">
   <label for="name">Name:</label>
   <input type="text" name="name" id="name" required />
 
@@ -12,22 +11,15 @@ content %}
   <textarea name="description" id="description" required></textarea>
 
   <label for="quantity">Quantity:</label>
-  <input type="number" name="quantity" id="quantity" required />
+  <input type="number" name="quantity" id="quantity" min="0" required />
 
-  {% if providers %}
   <label for="provider">Provider:</label>
-  <select name="provider_id" id="provider">
+
+  <select name="provider_id" id="provider" required>
     {% for provider in providers %}
     <option value="{{ provider.id }}">{{ provider.name }}</option>
     {% endfor %}
   </select>
-  {% else %}
-  <label for="provider">Provider:</label>
-  <input type="text" name="provider" id="provider" required />
-  {% endif %}
-
-  <label for="website">Link:</label>
-  <input type="text" name="website" id="website" required />
 
   <button type="submit">Add Product</button>
 </form>

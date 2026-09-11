@@ -1,0 +1,16 @@
+{% extends "base.html" %} {% block title %} Product Providers {% endblock %} {%
+block content %}
+
+<h2>Add Provider</h2>
+
+<form method="POST">
+  <label for="name">Provider name:</label>
+  <input type="text" name="name" id="name" required />
+
+  <label for="website">Website:</label>
+  <input type="url" name="website" id="website" required />
+
+  <button type="submit">Add Provider</button>
+</form>
+
+{% endblock %}

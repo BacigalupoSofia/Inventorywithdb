@@ -8,10 +8,6 @@ app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
 db.init_app(app)
 
-with app.app_context():
-    db.create_all()
-
-
 # Main page of the app
 
 @app.route('/')
@@ -31,37 +27,65 @@ def stock():
 @app.route('/add', methods=['GET', 'POST'])
 def add_product():
 
+    providers = Provider.query.all()
+
     if request.method == 'POST':
 
         name = request.form['name']
         description = request.form['description']
         manufacturer = request.form['manufacturer']
         stock_quantity = int(request.form['quantity'])
-        provider_name = request.form['provider']
-        website = request.form['website']
+        provider_id = request.form['provider_id']
 
-        # Create the product
         new_product = Product(
             name=name,
             description=description,
             manufacturer=manufacturer,
-            stock_quantity=stock_quantity
-        )
-
-        # Create the provider
-        new_provider = Provider(
-            name=provider_name,
-            website=website
+            stock_quantity=stock_quantity,
+            provider_id=provider_id
         )
 
         db.session.add(new_product)
-        db.session.add(new_provider)
-
         db.session.commit()
 
         return redirect(url_for('stock'))
 
-    return render_template('add.html')
+    return render_template(
+        'add.html',
+        providers=providers
+    )
+
+# Add providers 
+
+@app.route('/providers/add', methods=['GET', 'POST'])
+def add_provider():
+
+    if request.method == 'POST':
+
+        name = request.form['name']
+        website = request.form['website']
+
+        new_provider = Provider(
+            name=name,
+            website=website
+        )
+
+        db.session.add(new_provider)
+        db.session.commit()
+
+        return redirect(url_for('provider_list'))
+
+    return render_template('add_provider.html')
+
+@app.route('/providers')
+def provider_list():
+
+    providers = Provider.query.all()
+
+    return render_template(
+        'providers.html',
+        providers=providers
+    )
 
 # Delete from database or add or remove 1 item from the stock quantity 
 
@@ -89,7 +113,6 @@ def minus_stock(id):
 
     if page == "details":
         return redirect(url_for("details", id=id))
-
     
 @app.route('/plus/<int:id>')
 def plus_stock(id):
@@ -131,13 +154,6 @@ def edit_product(id):
 
     return render_template('edit.html', product=product)
 
-# Providers page
-
-@app.route('/providers/<int:product_id>', methods=['GET', 'POST'])
-def providers(product_id):
-    providers = Provider.query.all()
-    product = Product.query.get_or_404(product_id)
-    return render_template('providers.html', providers=providers, product=product)
 
 
 if __name__ == '__main__':

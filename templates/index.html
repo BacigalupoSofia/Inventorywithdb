@@ -43,6 +43,10 @@
     {% endif %}
   </section>
 
+  {% if providers %} {% for provider in providers %}
+  <p>{{provider.name}} This are providers</p>
+  {%endfor%} {% endif %}
+
   <!-- Add product Form button-->
 
   <a
