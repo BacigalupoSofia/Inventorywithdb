@@ -1,7 +1,9 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, flash
 from models import db, Product, Provider, Order, OrderItem
 
 app = Flask(__name__)
+
+app.secret_key = "my-secret-key"
 
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///products.db"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
@@ -13,6 +15,8 @@ db.init_app(app)
 @app.route('/')
 def home():
     return render_template('home.html')
+
+#PRODUCTS ROUTES -------------------------------------------------------------
 
 # display of Stock in the dental practice 
 
@@ -55,66 +59,6 @@ def add_product():
         providers=providers
     )
 
-# Add providers if not exist
-
-@app.route('/providers/add', methods=['GET', 'POST'])
-def add_provider():
-
-    if request.method == 'POST':
-
-        name = request.form['name']
-        website = request.form['website']
-
-        new_provider = Provider(
-            name=name,
-            website=website
-        )
-
-        existing = Provider.query.filter_by(name = new_provider.name)
-
-        if not existing:
-            db.session.add(new_provider)
-            db.session.commit()
-
-
-        return redirect(url_for('provider_list'))
-
-    return render_template('add_provider.html')
-
-@app.route('/providers')
-def provider_list():
-#Display all the existing providers
-
-    providers = Provider.query.all()
-
-    return render_template(
-        'providers.html',
-        providers=providers
-    )
-
-@app.route('/providers/seed')
-def seed_data():
-    # Seed providers
-
-    main_providers = [
-        {'name':'Dontalia', 'website':'https://www.dontalia.com/'},
-        {'name':'Henry Schein', 'website':'https://www.henryschein.ie/'},
-        {'name':'DMI', 'website':'https://www.dmi.ie/'},
-        {'name':'BF Mulholland', 'website':'https://www.bfmulholland.com/'}
-    ]
-
-    for seed in main_providers:
-        existing = Provider.query.filter_by(name = seed['name'] ).first()
-
-        if not existing:
-            provider = Provider(name=seed['name'], website=seed['website'])
-            db.session.add(provider)
-            db.session.commit()
-
-
-    providers=Provider.query.all()
-
-    return render_template('providers.html', providers=providers)
 
 # Delete from database or add or remove 1 item from the stock quantity 
 
@@ -182,6 +126,100 @@ def edit_product(id):
         return redirect(url_for('stock'))
 
     return render_template('edit.html', product=product)
+
+
+#PROVIDERS CRUD -------------------------------------------------------------
+
+# Add providers if not exist
+@app.route('/providers/add', methods=['GET', 'POST'])
+def add_provider():
+
+    if request.method == 'POST':
+
+        name = request.form['name']
+        website = request.form['website']
+
+        new_provider = Provider(
+            name=name,
+            website=website
+        )
+
+        existing = Provider.query.filter_by(name = new_provider.name)
+
+        if not existing:
+            db.session.add(new_provider)
+            db.session.commit()
+
+
+        return redirect(url_for('provider_list'))
+
+    return render_template('add_provider.html')
+
+@app.route('/providers/seed')
+def seed_data():
+    # Seed providers
+
+    main_providers = [
+        {'name':'Dontalia', 'website':'https://www.dontalia.com/'},
+        {'name':'Henry Schein', 'website':'https://www.henryschein.ie/'},
+        {'name':'DMI', 'website':'https://www.dmi.ie/'},
+        {'name':'BF Mulholland', 'website':'https://www.bfmulholland.com/'}
+    ]
+
+    for seed in main_providers:
+        existing = Provider.query.filter_by(name = seed['name'] ).first()
+
+        if not existing:
+            provider = Provider(name=seed['name'], website=seed['website'])
+            db.session.add(provider)
+            db.session.commit()
+
+
+    providers=Provider.query.all()
+
+    return render_template('providers.html', providers=providers)
+
+#Display all the existing providers
+@app.route('/providers')
+def provider_list():
+
+    providers = Provider.query.all()
+
+    return render_template(
+        'providers.html',
+        providers=providers
+    )
+
+# Delete provider (allowed only if not supplying any product)
+@app.route('/delete_provider/<int:provider_id>')
+def delete_provider(provider_id):
+
+    provider_del = Provider.query.get_or_404(provider_id)
+
+    if provider_del.products:
+        product_names = ", ".join(
+            product.name for product in provider_del.products
+        )
+
+        message = (
+            f"Cannot delete {provider_del.name}. "
+            f"They supply: {product_names}"
+        )
+
+        flash(message, "error")
+
+        return redirect(url_for('provider_list'))
+
+    db.session.delete(provider_del)
+    db.session.commit()
+
+    flash(
+        f"{provider_del.name} was deleted successfully.",
+        "success"
+    )
+
+    return redirect(url_for('provider_list'))
+
 
 
 

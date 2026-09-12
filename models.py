@@ -11,7 +11,7 @@ class Product(db.Model):
     manufacturer = db.Column(db.String(50), nullable=False)
     stock_quantity = db.Column(db.Integer, nullable=False)
 
-    provider_id = db.Column(db.Integer, db.ForeignKey('providers.id'))
+    provider_id = db.Column(db.Integer, db.ForeignKey('providers.id'), nullable=False)
     provider = db.relationship('Provider', back_populates='products')
 
     order_items = db.relationship(
@@ -23,8 +23,7 @@ class Product(db.Model):
         return f'<Product {self.name}>'
 
 #Providers model. 
-#One product can be ordered from multiple providers, 
-#and one provider can provide multiple products.
+#Each product has exactly one provider. A provider can supply many products.
 
 class Provider(db.Model):
     __tablename__ = 'providers'

@@ -3,11 +3,24 @@ block content %}
 
 <h2>Providers</h2>
 
+{% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        {% for category, message in messages %}
+            <div class="{{ category }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+{% endwith %}
+
+
 {% if providers %} {% for provider in providers %}
 
 <div>
   <h3>{{ provider.name }}</h3>
   <p>{{ provider.website }}</p>
+  <a href="{{ url_for('delete_provider', provider_id=provider.id) }}" class="btn btn-primary"
+    >Delete</a>
 </div>
 
 {% endfor %}
@@ -22,6 +35,20 @@ block content %}
 <a href="{{ url_for('add_provider') }}" class="btn btn-primary"
     >Add Provider</a>
 </div>
+
+
+<div> 
+<p> checking what products are added for each provider</p>
+{% for provider in providers %} 
+<h2>{{ provider.name }}</h2> 
+<ul> {% for product in provider.products %} 
+  <li>{{ product.name }} </li> 
+  {% endfor %} 
+</ul> 
+
+{% endfor %}
+</div>
+ 
 
 
 
