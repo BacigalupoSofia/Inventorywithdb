@@ -12,14 +12,15 @@ block content %}
 
 {% endfor %}
 
-  <a href="{{ url_for('add_provider') }}" class="btn btn-primary"
-    >Add Provider</a
-  >
+
   {% else %}
 
   <p>No providers have been added yet.</p>
 
   {% endif %} 
+
+<a href="{{ url_for('add_provider') }}" class="btn btn-primary"
+    >Add Provider</a>
 </div>
 
 
