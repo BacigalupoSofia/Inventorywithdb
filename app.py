@@ -87,17 +87,25 @@ def provider_list():
         providers=providers
     )
 
-@app.route('/seed')
+@app.route('/providers/seed')
 def seed_data():
     # Seed providers
 
-    provider1 = Provider(name='Dontalia', website='https://www.dontalia.com/')
-    provider2 = Provider(name='Henry Schein', website='https://www.henryschein.ie/')
-    provider3 = Provider(name='DMI', website='https://www.dmi.ie/?srsltid=AfmBOoqxe0ZRU3W1HykxQm6g-Stduc2StDLafUXySfi4X72npXNqW2ce')
-    provider4 = Provider(name='BF Mulholland', website='https://www.bfmulholland.com/')
+    main_providers = [
+        {'name':'Dontalia', 'website':'https://www.dontalia.com/'},
+        {'name':'Henry Schein', 'website':'https://www.henryschein.ie/'},
+        {'name':'DMI', 'website':'https://www.dmi.ie/'},
+        {'name':'BF Mulholland', 'website':'https://www.bfmulholland.com/'}
+    ]
 
-    db.session.add_all([provider1, provider2, provider3, provider4])
-    db.session.commit()
+    for seed in main_providers:
+        existing = Provider.query.filter_by(name = seed['name'] ).first()
+
+        if not existing:
+            provider = Provider(name=seed['name'], website=seed['website'])
+            db.session.add(provider)
+            db.session.commit()
+
 
     providers=Provider.query.all()
 
