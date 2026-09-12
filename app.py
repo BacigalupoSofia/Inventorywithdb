@@ -55,7 +55,7 @@ def add_product():
         providers=providers
     )
 
-# Add providers 
+# Add providers if not exist
 
 @app.route('/providers/add', methods=['GET', 'POST'])
 def add_provider():
@@ -70,8 +70,12 @@ def add_provider():
             website=website
         )
 
-        db.session.add(new_provider)
-        db.session.commit()
+        existing = Provider.query.filter_by(name = new_provider.name)
+
+        if not existing:
+            db.session.add(new_provider)
+            db.session.commit()
+
 
         return redirect(url_for('provider_list'))
 
@@ -79,6 +83,7 @@ def add_provider():
 
 @app.route('/providers')
 def provider_list():
+#Display all the existing providers
 
     providers = Provider.query.all()
 
