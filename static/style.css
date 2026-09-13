@@ -112,8 +112,10 @@ h2 {
 /* FLASH MESSAGES from flask in my htmls */
 .message {
   padding: 10px;
-  margin-bottom: 15px;
+  margin: 15px;
   border-radius: 5px;
+  font-size: large;
+  font-weight: 700;
 }
 
 .error {
