@@ -49,7 +49,7 @@ block content %}
       <div class="card-header">Order Details</div>
 
       <div class="card-body">
-        <h5 class="card-title">Order NOW from the provider</h5>
+        <h5 class="card-title">Order NOW from {{product.provider.name}} </h5>
 
         <p class="card-text">provider name and link to the product</p>
 
@@ -59,7 +59,7 @@ block content %}
       <div class="card-body">
         <h5 class="card-title">Add to the next order plan</h5>
 
-        <a href="#" class="btn btn-primary"> Add to order </a>
+        <a href="/add_to_order/{{ product.id }}" class="btn btn-primary"> Add to order </a>
       </div>
     </div>
   </div>

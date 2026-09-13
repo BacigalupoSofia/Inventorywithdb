@@ -1,0 +1,46 @@
+{% extends "base.html" %} {% block title %}Order Plan{% endblock %} {% block
+content %}
+
+<h1>Order Plan</h1>
+
+{% if orders %} {% for order in orders %}
+
+<div class="card mb-4">
+  <div class="card-header">
+    Order #{{ order.id }} — {{ order.provider.name }} — {{ order.status }}
+  </div>
+
+  <div class="card-body">
+    {% if order.items %}
+
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Product</th>
+          <th>Quantity</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        {% for item in order.items %}
+
+        <tr>
+          <td>{{ item.product.name }}</td>
+          <td>{{ item.quantity }}</td>
+        </tr>
+
+        {% endfor %}
+      </tbody>
+    </table>
+
+    {% else %}
+
+    <p>No products in this order.</p>
+
+    {% endif %}
+  </div>
+</div>
+
+{% endfor %} {% else %}
+<p>No Orders</p>
+{% endif %} {% endblock %}

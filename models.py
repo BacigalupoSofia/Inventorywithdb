@@ -52,7 +52,7 @@ class Order(db.Model):
     __tablename__ = 'orders'
 
     id = db.Column(db.Integer, primary_key=True)
-    status = db.Column(db.String(20),nullable=False,default="Planned")
+    status = db.Column(db.String(20),nullable=False,default="Planning")
 
     provider_id = db.Column(db.Integer, db.ForeignKey('providers.id'), nullable=False)
 

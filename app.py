@@ -220,6 +220,71 @@ def delete_provider(provider_id):
 
     return redirect(url_for('provider_list'))
 
+# ORDERS ROUTES -------------------------------------
+
+@app.route('/my_orders')
+def my_orders():
+    orders = Order.query.all()
+
+    return render_template('order_plan.html', orders=orders)
+
+# PRODUCTS IN ORDERS ROUTES -------------------------------------
+
+@app.route('/add_to_order/<int:product_id>')
+def add_to_order(product_id):
+
+    product = Product.query.get_or_404(product_id)
+
+    # 1. are we planning any order with the provider of this product?
+    order = Order.query.filter_by(
+        provider_id=product.provider_id,
+        status="Planning"
+    ).first()
+
+    # create a new order
+    if not order:
+        order = Order(
+            provider_id=product.provider_id,
+            status="Planning"
+        )
+
+        db.session.add(order)
+        db.session.commit()
+
+    # 2. Is the product is already in the order
+    order_item = OrderItem.query.filter_by(
+        order_id=order.id,
+        product_id=product.id
+    ).first()
+    # add up 1 unit or add the product for first time
+    if order_item:
+        order_item.quantity += 1
+
+        flash(
+            f"Another unit of {product.name} added to the order.",
+            "success"
+        )
+
+    else:
+        order_item = OrderItem(
+            order_id=order.id,
+            product_id=product.id,
+            quantity=1
+        )
+
+        db.session.add(order_item)
+
+        flash(
+            f"{product.name} added to the order.",
+            "success"
+        )
+
+    db.session.commit()
+
+    return redirect(url_for('my_orders'))
+
+
+
 
 
 
