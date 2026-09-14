@@ -8,7 +8,10 @@ content %}
 <div class="card mb-4 m-5">
   <div class="card-header d-flex justify-content-between">
     Order #{{ order.id }} — {{ order.provider.name }}
-    <a href="/toggle_order_status/{{ order.id }}" class="btn btn-warning">
+    <a
+      href="/toggle_order_status/{{ order.id }}"
+      class="btn {% if order.status == 'Planning' %} btn-warning {% elif order.status == 'Waiting' %} btn-info {% elif order.status == 'Completed' %} btn-success {% endif %}"
+    >
       {{ order.status }}
     </a>
   </div>
