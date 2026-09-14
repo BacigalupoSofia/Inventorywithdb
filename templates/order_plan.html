@@ -5,15 +5,18 @@ content %}
 
 {% if orders %} {% for order in orders %}
 
-<div class="card mb-4">
-  <div class="card-header">
-    Order #{{ order.id }} — {{ order.provider.name }} — {{ order.status }}
+<div class="card mb-4 m-5">
+  <div class="card-header d-flex justify-content-between">
+    Order #{{ order.id }} — {{ order.provider.name }}
+    <a href="/toggle_order_status/{{ order.id }}" class="btn btn-warning">
+      {{ order.status }}
+    </a>
   </div>
 
-  <div class="card-body">
+  <div class="card-body m-5">
     {% if order.items %}
 
-    <table class="table table-striped">
+    <table class="table table-striped table-hover">
       <thead>
         <tr>
           <th>Product</th>
@@ -27,7 +30,13 @@ content %}
 
         <tr>
           <td>{{ item.product.name }}</td>
-          <td>{{ item.quantity }}</td>
+          <td class="d-flex">
+            <a href="" class="btn btn-outline-secondary"> ➕ </a>
+
+            <div class="m-2">{{ item.quantity }}</div>
+
+            <a href="" class="btn btn-outline-warning"> ➖ </a>
+          </td>
           <td>
             <a
               href="{{ url_for('delete_from_order', unwanted_item_id=item.id) }}"

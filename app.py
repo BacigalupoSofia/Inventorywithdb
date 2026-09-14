@@ -228,6 +228,25 @@ def my_orders():
 
     return render_template('order_plan.html', orders=orders)
 
+#change status clicking
+@app.route('/toggle_order_status/<int:order_id>')
+def toggle_order_status(order_id):
+
+    order = Order.query.get_or_404(order_id)
+
+    if order.status == "Planning":
+        order.status = "Waiting"
+
+    elif order.status == "Waiting":
+        order.status = "Completed"
+
+    elif order.status == "Completed":
+        order.status = "Planning"
+
+    db.session.commit()
+
+    return redirect(url_for('my_orders'))
+
 # PRODUCTS IN ORDERS ROUTES ------------------------------------------------------------------
 
 @app.route('/add_to_order/<int:product_id>')
