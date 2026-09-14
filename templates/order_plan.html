@@ -9,7 +9,7 @@ content %}
     Order #{{ order.id }} — {{ order.provider.name }}
     <a
       href="/toggle_order_status/{{ order.id }}"
-      class="btn {% if order.status == 'Planning' %} btn-warning {% elif order.status == 'Waiting' %} btn-info {% elif order.status == 'Completed' %} btn-success {% endif %}"
+      class="btn {% if order.status == 'Planning' %} btn-warning {% elif order.status == 'Waiting' %} btn-info {% elif order.status == 'Completed' %} btn-success disabled {% endif %}"
     >
       {{ order.status }}
     </a>
@@ -33,7 +33,7 @@ content %}
           <td class="d-flex">
             <a
               href="{{ url_for('plus_order', id=item.id) }}"
-              class="btn btn-outline-secondary"
+              class="btn btn-outline-secondary {% if order.status == 'Completed' %} disabled {% endif %}"
             >
               ➕
             </a>
@@ -42,7 +42,7 @@ content %}
 
             <a
               href="{{ url_for('minus_order', id=item.id) }}"
-              class="btn btn-outline-warning"
+              class="btn btn-outline-warning {% if order.status == 'Completed' %} disabled {% endif %}"
             >
               ➖
             </a>
@@ -50,7 +50,7 @@ content %}
           <td>
             <a
               href="{{ url_for('delete_from_order', unwanted_item_id=item.id) }}"
-              class="btn btn-danger"
+              class="btn btn-danger {% if order.status == 'Completed' %} disabled {% endif %}"
             >
               Remove
             </a>
