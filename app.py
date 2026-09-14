@@ -220,7 +220,7 @@ def delete_provider(provider_id):
 
     return redirect(url_for('provider_list'))
 
-# ORDERS ROUTES -------------------------------------
+# ORDERS ROUTES ------------------------------------------------------------------------------
 
 @app.route('/my_orders')
 def my_orders():
@@ -228,7 +228,7 @@ def my_orders():
 
     return render_template('order_plan.html', orders=orders)
 
-# PRODUCTS IN ORDERS ROUTES -------------------------------------
+# PRODUCTS IN ORDERS ROUTES ------------------------------------------------------------------
 
 @app.route('/add_to_order/<int:product_id>')
 def add_to_order(product_id):
@@ -283,8 +283,15 @@ def add_to_order(product_id):
 
     return redirect(url_for('my_orders'))
 
+@app.route('/delete_from_order/<int:unwanted_item_id>')
+def delete_from_order(unwanted_item_id):
 
+    unwanted_item = OrderItem.query.get_or_404(unwanted_item_id)
 
+    db.session.delete(unwanted_item)
+    db.session.commit()
+
+    return redirect(url_for('my_orders'))
 
 
 
