@@ -86,6 +86,7 @@ def minus_stock(id):
 
     if page == "details":
         return redirect(url_for("details", id=id))
+
     
 @app.route('/plus/<int:id>')
 def plus_stock(id):
@@ -311,6 +312,30 @@ def delete_from_order(unwanted_item_id):
     db.session.commit()
 
     return redirect(url_for('my_orders'))
+
+@app.route('/minus_order/<int:id>')
+def minus_order(id):
+
+    product = OrderItem.query.get_or_404(id)
+    product.quantity -= 1
+
+    if product.quantity == 0:
+        db.session.delete(product)
+        
+    db.session.commit()
+    
+    return redirect(url_for('my_orders'))
+
+    
+@app.route('/plus_order/<int:id>')
+def plus_order(id):
+
+    product = OrderItem.query.get_or_404(id)
+    product.quantity += 1
+    db.session.commit()
+
+    return redirect(url_for('my_orders'))
+    
 
 
 

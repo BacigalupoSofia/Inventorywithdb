@@ -31,11 +31,21 @@ content %}
         <tr>
           <td>{{ item.product.name }}</td>
           <td class="d-flex">
-            <a href="" class="btn btn-outline-secondary"> ➕ </a>
+            <a
+              href="{{ url_for('plus_order', id=item.id) }}"
+              class="btn btn-outline-secondary"
+            >
+              ➕
+            </a>
 
             <div class="m-2">{{ item.quantity }}</div>
 
-            <a href="" class="btn btn-outline-warning"> ➖ </a>
+            <a
+              href="{{ url_for('minus_order', id=item.id) }}"
+              class="btn btn-outline-warning"
+            >
+              ➖
+            </a>
           </td>
           <td>
             <a
