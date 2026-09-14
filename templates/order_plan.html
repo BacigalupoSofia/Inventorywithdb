@@ -3,8 +3,7 @@ content %}
 
 <h1>Order Plan</h1>
 
-{% if orders %} {% for order in orders %}
-
+{% if orders %} {% for order in orders %} {% if order.items %}
 <div class="card mb-4 m-5">
   <div class="card-header d-flex justify-content-between">
     Order #{{ order.id }} — {{ order.provider.name }}
@@ -17,8 +16,6 @@ content %}
   </div>
 
   <div class="card-body m-5">
-    {% if order.items %}
-
     <table class="table table-striped table-hover">
       <thead>
         <tr>
@@ -53,10 +50,6 @@ content %}
         {% endfor %}
       </tbody>
     </table>
-
-    {% else %}
-
-    <p>No products in this order.</p>
 
     {% endif %}
   </div>
