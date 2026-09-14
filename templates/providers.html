@@ -16,11 +16,35 @@ block content %}
 
 {% if providers %} {% for provider in providers %}
 
-<div>
-  <h3>{{ provider.name }}</h3>
-  <p>{{ provider.website }}</p>
-  <a href="{{ url_for('delete_provider', provider_id=provider.id) }}" class="btn btn-primary"
+<div> 
+<div class="card mb-4 m-5">
+  <div class="card-header">
+    <h3>{{ provider.name }}</h3>
+    <p>{{ provider.website }}</p>
+     <a href="{{ url_for('delete_provider', provider_id=provider.id) }}" class="btn btn-primary"
     >Delete</a>
+</div>
+
+
+<div class="d-flex flex-wrap"> 
+
+{% for product in provider.products %} 
+    <article class="card product-card d-grid pt-3">
+      <img
+        class="card-img-left"
+        src="https://picsum.photos/200"
+        alt="Card image cap"
+      />
+
+      <h3 class="card-title product-name">{{ product.name }}</h3>
+
+      <h4 class="card-subtitle mb-2 text-muted">{{ product.manufacturer }}</h6>
+
+
+{% endfor %}
+
+</div>
+
 </div>
 
 {% endfor %}
@@ -36,18 +60,6 @@ block content %}
     >Add Provider</a>
 </div>
 
-
-<div> 
-<p> checking what products are added for each provider</p>
-{% for provider in providers %} 
-<h2>{{ provider.name }}</h2> 
-<ul> {% for product in provider.products %} 
-  <li>{{ product.name }} </li> 
-  {% endfor %} 
-</ul> 
-
-{% endfor %}
-</div>
  
 
 
