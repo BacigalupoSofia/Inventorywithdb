@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for, flash
-from models import db, Product, Provider, Order, OrderItem
+from models import db, Product, Provider, Order, OrderItem, Link
 
 app = Flask(__name__)
 
@@ -40,6 +40,7 @@ def add_product():
         manufacturer = request.form['manufacturer']
         stock_quantity = int(request.form['quantity'])
         provider_id = request.form['provider_id']
+        link = request.form['link']
 
         new_product = Product(
             name=name,
@@ -47,6 +48,12 @@ def add_product():
             manufacturer=manufacturer,
             stock_quantity=stock_quantity,
             provider_id=provider_id
+        )
+
+        new_product_link = Link(
+            link = link,
+            name = name,
+            provider_id= provider_id
         )
 
         db.session.add(new_product)
@@ -145,7 +152,7 @@ def add_provider():
             website=website
         )
 
-        existing = Provider.query.filter_by(name = new_provider.name)
+        existing = Provider.query.filter_by(name = new_provider.name).first()
 
         if not existing:
             db.session.add(new_provider)

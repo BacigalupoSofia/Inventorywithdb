@@ -22,6 +22,42 @@ class Product(db.Model):
     def __repr__(self):
         return f'<Product {self.name}>'
 
+
+## MODEL TO ADD LINK TO THE PROVIDER PAGE FOR THAT PRODUCT
+class Link(db.Model):
+    __tablename__ = 'links'
+
+    id = db.Column(db.Integer, primary_key=True)
+    link = db.Column(db.String(200), nullable=False)
+
+    product_id = db.Column(
+        db.Integer,
+        db.ForeignKey('products.id'),
+        nullable=False
+    )
+
+    provider_id = db.Column(db.Integer, db.ForeignKey('providers.id'), nullable=False)
+
+    product = db.relationship(
+        'Product',
+        back_populates='links'
+    )
+
+    provider = db.relationship('Provider', back_populates='links')
+
+    order_item = db.relationship(
+        "OrderItem",
+        back_populates="links"
+    )
+
+    links = db.relationship(
+    'Link',
+    back_populates='product'
+)
+
+    def __repr__(self):
+        return f'<Product {self.id}>'
+
 #Providers model. 
 #Each product has exactly one provider. A provider can supply many products.
 
@@ -39,6 +75,11 @@ class Provider(db.Model):
         "Order",
         back_populates="provider"
     )
+
+    links = db.relationship(
+    'Link',
+    back_populates='provider'
+)
 
     def __repr__(self):
             return f'<Provider {self.name}>'
