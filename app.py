@@ -52,8 +52,8 @@ def add_product():
 
         new_product_link = Link(
             link = link,
-            name = name,
-            provider_id= provider_id
+            product_id = new_product.id,
+            provider_id = provider_id
         )
 
         db.session.add(new_product)

@@ -14,6 +14,11 @@ class Product(db.Model):
     provider_id = db.Column(db.Integer, db.ForeignKey('providers.id'), nullable=False)
     provider = db.relationship('Provider', back_populates='products')
 
+    links = db.relationship(
+    'Link',
+    back_populates='product'
+)
+
     order_items = db.relationship(
         "OrderItem",
         back_populates="product"
