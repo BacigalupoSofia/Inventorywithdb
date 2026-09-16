@@ -45,9 +45,12 @@ def add_product():
         link = request.form['link']
         image = request.files['image']
 
-        if image and image.filename:
-                    filename = secure_filename(image.filename)
-                    image.save(os.path.join(app.static_folder,'uploads',filename))
+        if image:
+                filename = secure_filename(image.filename)
+                image.save(os.path.join(app.static_folder,'uploads',filename))
+        else:
+                filename = 'nophotoavailable.jpg'
+                
 
         new_product = Product(
             name=name,
