@@ -20,7 +20,8 @@ content %}
       <thead>
         <tr>
           <th>Product</th>
-          <th>Quantity</th>
+          <th>Quantity in stock</th>
+          <th>Quantity to order</th>
           <th></th>
         </tr>
       </thead>
@@ -30,6 +31,7 @@ content %}
 
         <tr>
           <td>{{ item.product.name }}</td>
+          <td>{{ item.product.stock_quantity }}</td>
           <td class="d-flex">
             <a
               href="{{ url_for('plus_order', id=item.id) }}"

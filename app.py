@@ -50,13 +50,16 @@ def add_product():
             provider_id=provider_id
         )
 
+        db.session.add(new_product)
+        db.session.flush()
+
         new_product_link = Link(
             link = link,
             product_id = new_product.id,
             provider_id = provider_id
         )
 
-        db.session.add(new_product)
+        db.session.add(new_product_link)
         db.session.commit()
 
         return redirect(url_for('stock'))
@@ -123,6 +126,7 @@ def details(id):
 @app.route('/edit/<int:id>', methods=['GET', 'POST'])
 def edit_product(id):
     product = Product.query.get_or_404(id)
+    product_link = Link.query.filter_by(product_id=product.id, provider_id=product.provider_id).first()
 
     if request.method == 'POST':
         product.name = request.form['name']
@@ -130,10 +134,21 @@ def edit_product(id):
         product.manufacturer = request.form['manufacturer']
         product.stock_quantity = int(request.form['stock_quantity'])
 
+
+        if product_link:
+            product_link.link= request.form['link']
+        else:
+            product_link = Link(
+            link=request.form['link'],
+            product_id=product.id,
+            provider_id=product.provider_id)
+
+            db.session.add(product_link)
+
         db.session.commit()
         return redirect(url_for('stock'))
 
-    return render_template('edit.html', product=product)
+    return render_template('edit.html', product=product, product_link=product_link)
 
 
 #PROVIDERS CRUD -------------------------------------------------------------

@@ -14,15 +14,14 @@ class Product(db.Model):
     provider_id = db.Column(db.Integer, db.ForeignKey('providers.id'), nullable=False)
     provider = db.relationship('Provider', back_populates='products')
 
-    links = db.relationship(
-    'Link',
-    back_populates='product'
-)
-
     order_items = db.relationship(
         "OrderItem",
         back_populates="product"
     )
+
+    links = db.relationship(
+        'Link',
+        back_populates='product')
 
     def __repr__(self):
         return f'<Product {self.name}>'
@@ -33,7 +32,7 @@ class Link(db.Model):
     __tablename__ = 'links'
 
     id = db.Column(db.Integer, primary_key=True)
-    link = db.Column(db.String(200), nullable=False)
+    link = db.Column(db.Text, nullable=False)
 
     product_id = db.Column(
         db.Integer,
@@ -50,15 +49,6 @@ class Link(db.Model):
 
     provider = db.relationship('Provider', back_populates='links')
 
-    order_item = db.relationship(
-        "OrderItem",
-        back_populates="links"
-    )
-
-    links = db.relationship(
-    'Link',
-    back_populates='product'
-)
 
     def __repr__(self):
         return f'<Product {self.id}>'

@@ -25,7 +25,9 @@
     value="{{ product.description }}"
     required
   />
-  <br /><br />
+
+  <label for="link">Link to the product:</label>
+  <textarea name="link" id="link" required>{% if product_link %}{{ product_link.link }}{% endif %}</textarea>
 
   <label for="manufacturer">Manufacturer:</label>
   <input
@@ -35,7 +37,7 @@
     value="{{ product.manufacturer }}"
     required
   />
-  <br /><br />
+  
 
   <label for="stock_quantity">Stock Quantity:</label>
   <input

@@ -51,9 +51,17 @@ block content %}
       <div class="card-body">
         <h5 class="card-title">Order NOW from {{product.provider.name}} </h5>
 
-        <p class="card-text">provider name and link to the product</p>
+        <p class="card-text">
+          {% for link in product.provider.links %}
+            {% if link.product_id == product.id %}
+              <a href="{{ link.link }}" class="btn btn-primary" target="_blank">
+            ORDER HERE </a>
+            {% endif %}
+          {% endfor %}
+        </p>
 
-        <a href="#" class="btn btn-primary"> Order Now </a>
+     
+
       </div>
 
       <div class="card-body">
