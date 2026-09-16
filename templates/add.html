@@ -1,8 +1,15 @@
 {% extends "base.html" %} {% block title %} Add Form {% endblock %} {% block
 content %}
-<form method="POST" action="{{ url_for('add_product') }}">
+<form
+  method="POST"
+  action="{{ url_for('add_product') }}"
+  enctype="multipart/form-data"
+>
   <label for="name">Name:</label>
   <input type="text" name="name" id="name" required />
+
+  <label for="image">Product image:</label>
+  <input type="file" name="image" id="image" accept="image/*" />
 
   <label for="manufacturer">Manufacturer:</label>
   <input type="text" name="manufacturer" id="manufacturer" required />
