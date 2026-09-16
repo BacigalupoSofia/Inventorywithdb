@@ -6,12 +6,17 @@
 
   <section class="product-grid p-5 m-3">
     {% if products %} {% for product in products %}
-    <article class="card product-card">
-      <img
-        class="card-img-top"
-        src="https://picsum.photos/200"
-        alt="Card image cap"
-      />
+
+    <div>
+    {% if product.img %}
+    <img
+        src="{{ url_for('static', filename='uploads/' + product.img) }}"
+        alt="{{ product.name }}"
+        style="width: 100%; height: 150px; object-fit: cover;"
+    >
+    </div>
+  
+{% endif %}
       <h3 class="card-title product-name">{{ product.name }}</h3>
       <p class="product-manufacturer">{{ product.manufacturer }}</p>
       <p class="stock-quatity">

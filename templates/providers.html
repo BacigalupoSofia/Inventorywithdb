@@ -24,11 +24,13 @@ providers %}
       {% for product in provider.products %}
 
       <article class="card product-card" style="width: 15%">
+        {% if product.img %}
         <img
           class="card-img-top"
-          src="https://picsum.photos/200"
-          alt="Product image"
+          src="{{ url_for('static', filename='uploads/' + product.img) }}"
+          alt="{{ product.name }}"
         />
+        {% endif %}
 
         <div class="card-body">
           <h5 class="card-title">{{ product.name }}</h5>
