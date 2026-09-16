@@ -20,10 +20,19 @@ providers %}
         >Delete</a
       >
     </div>
-    <div class="d-flex flex-wrap gap-3 m-2">
-      {% for product in provider.products %}
 
-      <article class="card product-card" style="width: 15%">
+    
+
+    <div class="d-flex flex-wrap gap-3 m-2">
+    
+      {% for product in provider.products %}
+      <a
+            href="{{ url_for('details', id=product.id) }}"
+            class="text-decoration-none text-dark"
+            style="width: 15%"
+        >
+
+      <article class="card product-card" style="width: 100%">
         {% if product.img %}
         <img
           class="card-img-top"
@@ -43,7 +52,7 @@ providers %}
     </div>
   </div>
 
-  {% endfor %} {% else %}
+  {% endfor %} </a> {% else %}
 
   <p>No providers have been added yet.</p>
 
