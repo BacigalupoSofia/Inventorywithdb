@@ -1,37 +1,93 @@
 {% extends "base.html" %} {% block title %} Add Form {% endblock %} {% block
 content %}
-<form
-  method="POST"
-  action="{{ url_for('add_product') }}"
-  enctype="multipart/form-data"
->
-  <label for="name">Name:</label>
-  <input type="text" name="name" id="name" required />
 
-  <label for="image">Product image:</label>
-  <input type="file" name="image" id="image" accept="image/*" />
+<div class="container py-5 bg-light mt-5">
+  <div class="col-md-8 mx-auto">
+    <h2 class="text-center mb-2">Add Product</h2>
 
-  <label for="manufacturer">Manufacturer:</label>
-  <input type="text" name="manufacturer" id="manufacturer" required />
+    <form
+      method="POST"
+      action="{{ url_for('add_product') }}"
+      enctype="multipart/form-data"
+    >
+      <div class="row g-3">
+        <div class="col-md-6">
+          <label for="name" class="form-label">Name:</label>
+          <input
+            type="text"
+            name="name"
+            id="name"
+            class="form-control"
+            required
+          />
+        </div>
 
-  <label for="description">Description:</label>
-  <textarea name="description" id="description" required></textarea>
+        <div class="col-md-6">
+          <label for="image" class="form-label">Product image:</label>
+          <input
+            type="file"
+            name="image"
+            id="image"
+            accept="image/*"
+            class="form-control"
+          />
+        </div>
 
-  <label for="link">Link to the product:</label>
-  <textarea name="link" id="link" required></textarea>
+        <div class="col-md-6">
+          <label for="manufacturer" class="form-label"> Manufacturer: </label>
+          <input
+            type="text"
+            name="manufacturer"
+            id="manufacturer"
+            class="form-control"
+            required
+          />
+        </div>
 
-  <label for="quantity">Quantity:</label>
-  <input type="number" name="quantity" id="quantity" min="0" required />
+        <div class="col-md-6">
+          <label for="link" class="form-label"> Link to the product: </label>
+          <input name="link" id="link" class="form-control" required />
+        </div>
 
-  <label for="provider">Provider:</label>
+        <div class="col-12">
+          <label for="description" class="form-label"> Description: </label>
+          <textarea
+            name="description"
+            id="description"
+            class="form-control"
+            required
+          ></textarea>
+        </div>
 
-  <select name="provider_id" id="provider" required>
-    {% for provider in providers %}
-    <option value="{{ provider.id }}">{{ provider.name }}</option>
-    {% endfor %}
-  </select>
+        <div class="col-md-6">
+          <label for="quantity" class="form-label"> Quantity: </label>
+          <input
+            type="number"
+            name="quantity"
+            id="quantity"
+            min="0"
+            class="form-control"
+            required
+          />
+        </div>
 
-  <button type="submit">Add Product</button>
-</form>
+        <div class="col-md-6">
+          <label for="provider" class="form-label"> Provider: </label>
+          <select name="provider_id" id="provider" class="form-select" required>
+            {% for provider in providers %}
+            <option value="{{ provider.id }}">{{ provider.name }}</option>
+            {% endfor %}
+          </select>
+        </div>
+
+        <div class="col-12 text-center">
+          <button type="submit" class="btn btn-success mt-3">
+            Add Product
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
 
 {% endblock %}
