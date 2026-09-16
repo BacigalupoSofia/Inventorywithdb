@@ -1,5 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for, flash
 from models import db, Product, Provider, Order, OrderItem, Link
+from werkzeug.utils import secure_filename
+import os
 
 app = Flask(__name__)
 
@@ -41,13 +43,19 @@ def add_product():
         stock_quantity = int(request.form['quantity'])
         provider_id = request.form['provider_id']
         link = request.form['link']
+        image = request.files['image']
+
+        if image and image.filename:
+                    filename = secure_filename(image.filename)
+                    image.save(os.path.join(app.static_folder,'uploads',filename))
 
         new_product = Product(
             name=name,
             description=description,
             manufacturer=manufacturer,
             stock_quantity=stock_quantity,
-            provider_id=provider_id
+            provider_id=provider_id,
+            img=filename
         )
 
         db.session.add(new_product)
