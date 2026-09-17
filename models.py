@@ -21,8 +21,10 @@ class Product(db.Model):
     )
 
     links = db.relationship(
-        'Link',
-        back_populates='product')
+    'Link',
+    back_populates='product',
+    cascade='all, delete-orphan'
+)
 
     def __repr__(self):
         return f'<Product {self.name}>'

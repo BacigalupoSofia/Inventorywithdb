@@ -1,5 +1,11 @@
 {% extends "base.html" %} {% block title %} dental Practice Stock {% endblock %}
-{% block content %}
+{% block content %} {% with messages =
+get_flashed_messages(with_categories=true) %} {% for category, message in
+messages %} {% if category == "product_added" %}
+<div class="message success">{{ message }}</div>
+{% endif %} {% if category == "product_deleted" %}
+<div class="message error">{{ message }}</div>
+{% endif %}{% endfor %} {% endwith %}
 
 <body>
   <h2>Dental Practice Stock</h2>

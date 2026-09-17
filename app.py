@@ -45,7 +45,7 @@ def add_product():
         link = request.form['link']
         image = request.files['image']
 
-        if image:
+        if image and image.filename:
                 filename = secure_filename(image.filename)
                 image.save(os.path.join(app.static_folder,'uploads',filename))
         else:
@@ -73,6 +73,8 @@ def add_product():
         db.session.add(new_product_link)
         db.session.commit()
 
+        flash( f"{new_product.name} added to the list.", "product_added")
+
         return redirect(url_for('stock'))
 
     return render_template(
@@ -86,8 +88,17 @@ def add_product():
 @app.route('/delete/<int:id>')
 def delete_product(id):
     product = Product.query.get_or_404(id)
+    order_item = OrderItem.query.filter_by(product_id=product.id).first() 
+
+    if order_item: 
+        flash( f"Cannot delete {product.name} because it is already in an order.", "product_deleted" ) 
+        return redirect(url_for('stock'))
+
     db.session.delete(product)
+    flash( f"{product.name} deleted", "product_deleted")
+        
     db.session.commit()
+     
     return redirect(url_for('stock'))
 
 @app.route('/minus/<int:id>')
@@ -315,7 +326,7 @@ def add_to_order(product_id):
 
         flash(
             f"Another unit of {product.name} added to the order.",
-            "success"
+            "order_success"
         )
 
     else:
@@ -329,7 +340,7 @@ def add_to_order(product_id):
 
         flash(
             f"{product.name} added to the order.",
-            "success"
+            "order_success"
         )
 
     db.session.commit()

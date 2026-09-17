@@ -1,5 +1,9 @@
 {% extends "base.html" %} {% block title %}Order Plan{% endblock %} {% block
-content %}
+content %} {% with messages =
+get_flashed_messages(category_filter=["order_success"]) %} {% if messages %} {%
+for message in messages %}
+<div class="message success">{{ message }}</div>
+{% endfor %} {% endif %} {% endwith %}
 
 <h1>Order Plan</h1>
 
