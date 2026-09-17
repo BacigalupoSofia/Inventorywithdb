@@ -16,6 +16,7 @@ providers %}
       <p>{{ provider.website }}</p>
       <a
         href="{{ url_for('delete_provider', provider_id=provider.id) }}"
+        onclick="return confirm('{{ provider.name }} will be deleted and not available anymore')"
         class="btn btn-primary"
         >Delete</a
       >

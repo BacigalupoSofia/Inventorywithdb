@@ -33,6 +33,7 @@ messages %} {% if category == "product_added" %}
         <p class="stock-quatity">
           <a
             href="{{ url_for('plus_stock', id=product.id, page='stock') }}"
+            onclick="return confirm('You are adding 1 {{ product.name }} to the stock')"
             class="btn btn-outline-secondary"
           >
             ➕
@@ -42,6 +43,7 @@ messages %} {% if category == "product_added" %}
 
           <a
             href="{{ url_for('minus_stock', id=product.id, page='stock') }}"
+            onclick="return confirm('You are removing 1 {{ product.name }} from the stock')"
             class="btn btn-outline-warning"
           >
             ➖
@@ -55,7 +57,12 @@ messages %} {% if category == "product_added" %}
           See Product
         </a>
 
-        <a href="{{ url_for('delete_product', id=product.id) }}"> Delete </a>
+        <a
+          href="{{ url_for('delete_product', id=product.id) }}"
+          onclick="return confirm('Are you sure you want to delete {{ product.name }}?')"
+        >
+          Delete
+        </a>
 
         <a href="{{ url_for('edit_product', id=product.id) }}"> Edit </a>
       </div>
