@@ -1,44 +1,36 @@
 {% extends "base.html" %} {% block title %} Edit Product Details {% endblock %}
 {% block content %}
 
-<h1>Edit {{product.name}}</h1>
+<div class="container py-2 bg-light mt-5">
+  <div class="col-md-8 mx-auto">
 
+    <h2 class="text-center mb-2">Edit {{product.name}}</h2>
 
-<form method="POST">
-   
-  <label for="name">Name:</label>
-  <input
+<form method="POST" enctype="multipart/form-data">
+
+  <div class="row g-3">
+    <div class="row g-3">
+        <div class="col">
+          <label for="name">Name:</label>
+          <input
     type="text"
     name="name"
     id="name"
     value="{{ product.name }}"
+    class= "form-control"
     required
   />
-  <br /><br />
-    </div>
-
-  <label for="description">Description:</label>
-  <input
-    type="text"
-    name="description"
-    id="description"
-    value="{{ product.description }}"
-    required
-  />
-
-  <label for="link">Link to the product:</label>
-  <textarea name="link" id="link" required>{% if product_link %}{{ product_link.link }}{% endif %}</textarea>
-
+  <div class="col">
   <label for="manufacturer">Manufacturer:</label>
   <input
     type="text"
     name="manufacturer"
     id="manufacturer"
     value="{{ product.manufacturer }}"
+    class="form-control"
     required
   />
-  
-
+  <div class="col"> 
   <label for="stock_quantity">Stock Quantity:</label>
   <input
     type="number"
@@ -46,14 +38,77 @@
     id="stock_quantity"
     min="0"
     value="{{ product.stock_quantity }}"
+    class=" form-control"
     required
   />
-  <br /><br />
+  <div class="col">
+    <label for="link">Link to the product:</label>
+  <textarea name="link" id="link" class="form-control" required>{% if product_link %}{{ product_link.link }}{% endif %}</textarea>
+  </div>
+ 
+ </div>
+  </div>
+    </div >
+    <div class="row col-md-6"> 
+    <div class="col"> 
+    <label class="form-label"> Image:</label>
+        <div>
+            <img
+                src="{{ url_for('static', filename='uploads/' + product.img) }}"
+                alt="{{ product.name }}"
+                style="width: 150px; height: 150px; object-fit: contain;"
+            >
+        </div>
 
-  <button type="submit" class="btn btn-primary">Update Product</button>
+    <label for="image" class="form-label mt-3">
+        Change image:
+    </label>
+    <input
+        type="file"
+        name="image"
+        id="image"
+        accept="image/*"
+        class="form-control"
+    >
+    </div>
+</div>
+</div>
+
+    
+  </div>
+
+   <div class="col"> 
+  <label for="description">Description:</label>
+  <input
+    type="text"
+    name="description"
+    id="description"
+    value="{{ product.description }}"
+    class="form-control"
+    required
+  />
+  </div>
+
+  
+
+    
+
+  
+
+
+
+
+
+  <div class="col-12 text-center">
+          <button type="submit" class="btn btn-success mt-3">
+            Edit Product
+          </button>
+
 </form>
 
-<br />
+
+</div>
 <a href="{{ url_for('stock') }}">Back to Stock</a>
+</div>
 
 {% endblock %}
