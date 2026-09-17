@@ -168,6 +168,9 @@ def edit_product(id):
             db.session.add(product_link)
 
         db.session.commit()
+
+        flash( f"{product.name} has been edited", "product_edited")
+
         return redirect(url_for('stock'))
 
     return render_template('edit.html', product=product, product_link=product_link)

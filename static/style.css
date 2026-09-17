@@ -127,3 +127,8 @@ h2 {
   background-color: #d1e7dd;
   color: #0f5132;
 }
+
+.warning {
+  background-color: #f2f240;
+  color: #6f701c;
+}

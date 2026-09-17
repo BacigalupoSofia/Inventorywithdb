@@ -5,6 +5,8 @@ messages %} {% if category == "product_added" %}
 <div class="message success">{{ message }}</div>
 {% endif %} {% if category == "product_deleted" %}
 <div class="message error">{{ message }}</div>
+{% endif %}{% if category == "product_edited" %}
+<div class="message warning">{{ message }}</div>
 {% endif %}{% endfor %} {% endwith %}
 
 <body>
