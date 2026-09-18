@@ -57,6 +57,7 @@ for message in messages %}
             <a
               href="{{ url_for('delete_from_order', unwanted_item_id=item.id) }}"
               class="btn btn-danger {% if order.status == 'Completed' %} disabled {% endif %}"
+              onclick="return confirm('Are you sure you want to delete {{item.product.name}} from the order list?');"
             >
               Remove
             </a>

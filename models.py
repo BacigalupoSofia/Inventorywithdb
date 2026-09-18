@@ -93,7 +93,7 @@ class Order(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     status = db.Column(db.String(20),nullable=False,default="Planning")
 
-    provider_id = db.Column(db.Integer, db.ForeignKey('providers.id'), nullable=False)
+    provider_id = db.Column(db.Integer, db.ForeignKey('providers.id',ondelete='SET NULL'), nullable=True)
 
     provider = db.relationship("Provider",back_populates="orders")
     items = db.relationship("OrderItem",back_populates="order",cascade="all, delete-orphan")
