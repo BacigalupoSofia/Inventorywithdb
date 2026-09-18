@@ -13,7 +13,8 @@ for message in messages %}
     Order #{{ order.id }} — {{ order.provider.name }}
     <a
       href="/toggle_order_status/{{ order.id }}"
-      class="btn {% if order.status == 'Planning' %} btn-warning {% elif order.status == 'Waiting' %} btn-info {% elif order.status == 'Completed' %} btn-success {% endif %}"
+      onclick="{% if order.status == 'Planning' %} return confirm ('Was the order confirmed by the provider?') {% elif order.status == 'Waiting' %} return confirm ('Was the order delivered to the practice?'){% endif %}"
+      class="btn {% if order.status == 'Planning' %} btn-warning {% elif order.status == 'Waiting' %} btn-info {% elif order.status == 'Completed' %} btn-success disabled {% endif %}"
     >
       {{ order.status }}
     </a>
