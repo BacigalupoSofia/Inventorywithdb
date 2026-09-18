@@ -6,7 +6,8 @@ import os
 app = Flask(__name__)
 
 app.secret_key = "my-secret-key"
-
+app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///products.db"
+app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 db.init_app(app)
 
 # Main page of the app
